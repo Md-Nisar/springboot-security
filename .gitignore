@@ -1,0 +1,79 @@
+# Logs
+logs/
+*.log
+*.log.*
+
+# Java
+*.class
+*.war
+*.jar
+
+# Maven
+target/
+.mvn/
+
+# Gradle
+.gradle/
+build/
+
+# Spring Boot
+*.pid
+hs_err_pid*
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+out/
+
+# Eclipse
+*.classpath
+*.project
+*.settings/
+.apt_generated/
+.factorypath/
+
+# NetBeans
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+*.bak
+
+# VSCode
+.vscode/
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+
+# Git specific
+*.swp
+*.swo
+*.orig
+*.rej
+*.patch
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Angular
+dist/
+.angular/
+.angular/cache/
+src/assets/generated/
+tmp/
+
+# Environment Variables
+.env
+*.env.local
+.env.*
+
+# Dependency directories
+bower_components/
