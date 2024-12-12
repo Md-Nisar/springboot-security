@@ -7,6 +7,8 @@ public class Profiles {
 
     public static final String REDIS = "redis";
     public static final String SNOWFLAKE = "snowflake";
+    public static final String DOCKER = "docker";
+
 
     public static final String[] mandatory = { REDIS };
 
