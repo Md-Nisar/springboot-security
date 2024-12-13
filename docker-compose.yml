@@ -3,8 +3,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: app:1.0
+    image: app:latest
     container_name: app
+    environment:
+      SPRING_PROFILES_ACTIVE: "docker"
     depends_on:
       mysql:
         condition: service_healthy

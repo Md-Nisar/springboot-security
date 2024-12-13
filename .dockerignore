@@ -1,0 +1,3 @@
+# Exclude target directory except the JAR file
+**/target/*
+!**/target/*.jar

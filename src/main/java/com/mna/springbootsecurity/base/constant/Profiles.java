@@ -5,6 +5,8 @@ public class Profiles {
     private Profiles() {
     }
 
+    public static final String DEV = "dev";
+
     public static final String REDIS = "redis";
     public static final String SNOWFLAKE = "snowflake";
     public static final String DOCKER = "docker";
