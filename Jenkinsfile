@@ -17,14 +17,14 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Building the application using Maven..."
-                sh "mvn clean install -DskipTests=true" // Adjust to your project's build tool (Maven/Gradle)
+                bat "mvn clean install -DskipTests=true" // Adjust to your project's build tool (Maven/Gradle)
             }
         }
 
         stage('Package Application') {
             steps {
                 echo "Packaging the application as a JAR file..."
-                sh "mvn package"
+                bat "mvn package"
             }
         }
 
