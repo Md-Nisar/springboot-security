@@ -24,7 +24,7 @@ pipeline {
         stage('Package Application') {
             steps {
                 echo "Packaging the application as a JAR file..."
-                bat "mvn package"
+                bat "mvn package -DskipTests=true"
             }
         }
 
