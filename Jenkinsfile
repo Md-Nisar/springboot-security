@@ -9,7 +9,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = "nisar10/app"
         DOCKER_TAG = "latest"
-        DOCKER_REGISTRY = "https://index.docker.io/v1/"
+        DOCKER_REGISTRY = "https://docker.io"
         PORT = 8089
     }
 
@@ -45,29 +45,23 @@ pipeline {
         }
 
         stage('Login to Docker Hub') {
-            options {
-                timeout(time: 30, unit: "MINUTES")
-            }
             steps {
                 script {
                     echo "Logging in to Docker Hub..."
-                    docker.withRegistry(DOCKER_REGISTRY, 'dockerhub-credentials') {
-                        echo "Successfully logged in to Docker Hub!"
+                    // Use withCredentials to inject Docker credentials
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USER')]) {
+                        bat "docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD} ${DOCKER_REGISTRY}"
                     }
                 }
             }
         }
 
         stage('Push Docker Image') {
-            options {
-                timeout(time: 30, unit: "MINUTES")
-            }
             steps {
                 script {
                     echo "Pushing Docker image to Docker Hub..."
-                    docker.withRegistry(DOCKER_REGISTRY, 'dockerhub-credentials') {
-                        bat "docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"
-                    }
+                    // Push the Docker image to Docker Hub
+                    bat "docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"
                 }
             }
         }
@@ -76,7 +70,6 @@ pipeline {
             steps {
                 script {
                     echo "Deploying application using Docker Compose..."
-
                     def composeFile = 'docker-compose.yml'
 
                     // Pull the latest Docker images
