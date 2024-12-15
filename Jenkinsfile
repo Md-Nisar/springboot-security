@@ -9,7 +9,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = "nisar10/app"
         DOCKER_TAG = "latest"
-        DOCKER_REGISTRY = "https://docker.io"
+        DOCKER_REGISTRY = "https://index.docker.io/v1/"
         PORT = 8089
     }
 
