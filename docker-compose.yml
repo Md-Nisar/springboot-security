@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: app:latest
+    image: nisar10/app:latest
     container_name: app
     environment:
       SPRING_PROFILES_ACTIVE: "docker"
