@@ -51,7 +51,7 @@ pipeline {
             steps {
                 script {
                     echo "Logging in to Docker Hub..."
-                    bat "docker login -u \"nisar10\" -p \"Nisar\""
+                    bat "docker login -u \"nisar10\" -p \"Nisar@039\""
                 }
             }
         }
