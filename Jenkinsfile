@@ -51,9 +51,10 @@ pipeline {
             steps {
                 script {
                     echo "Logging in to Docker Hub..."
-                     docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-credentials') {
-                             echo "Successfully logged in to Docker Hub"
-                         }
+                    docker.withRegistry(DOCKER_REGISTRY, 'dockerhub-credentials') {
+                        echo "Successfully logged in to Docker Hub"
+                    }
+                }
             }
         }
 
@@ -64,9 +65,9 @@ pipeline {
             steps {
                 script {
                     echo "Pushing Docker image to Docker Hub..."
-                    docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-credentials') {
-                              bat "docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"
-                       }
+                    docker.withRegistry(DOCKER_REGISTRY, 'dockerhub-credentials') {
+                        bat "docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"
+                    }
                 }
             }
         }
