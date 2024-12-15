@@ -45,21 +45,29 @@ pipeline {
         }
 
         stage('Login to Docker Hub') {
+         options {
+                timeout(time: 30, unit: "MINUTES")
+              }
             steps {
                 script {
                     // Login to Docker Hub (set up Docker credentials in Jenkins)
-                    docker.withRegistry('https://docker.io', 'dockerhub-credentials') {
+                    //docker.withRegistry('https://docker.io', 'dockerhub-credentials') {
                         // Login happens here, but no further commands inside the block
+                        bat docker login -u nisar10 -p Nisar@039
                     }
                 }
             }
         }
 
         stage('Push Docker Image') {
+         options {
+                timeout(time: 30, unit: "MINUTES")
+              }
             steps {
                 script {
                     // Push the image to Docker Hub
-                    docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-credentials') {
+
+                  //  docker.withRegistry('https://docker.io', 'dockerhub-credentials') {
                         bat "docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"
                     }
                 }
