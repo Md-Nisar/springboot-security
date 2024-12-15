@@ -38,38 +38,32 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Build Docker image with specified Image name and tag, from Dockerfile
+                    echo "Building Docker image..."
                     bat "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} ."
                 }
             }
         }
 
         stage('Login to Docker Hub') {
-         options {
+            options {
                 timeout(time: 30, unit: "MINUTES")
-              }
+            }
             steps {
                 script {
-                    // Login to Docker Hub (set up Docker credentials in Jenkins)
-                    //docker.withRegistry('https://docker.io', 'dockerhub-credentials') {
-                        // Login happens here, but no further commands inside the block
-                        bat "docker login -u 'nisar10' -p 'Nisar@039'"
-                    }
+                    echo "Logging in to Docker Hub..."
+                    bat "docker login -u \"nisar10\" -p \"Nisar\""
                 }
             }
         }
 
         stage('Push Docker Image') {
-         options {
+            options {
                 timeout(time: 30, unit: "MINUTES")
-              }
+            }
             steps {
                 script {
-                    // Push the image to Docker Hub
-
-                  //  docker.withRegistry('https://docker.io', 'dockerhub-credentials') {
-                        bat "docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"
-                    }
+                    echo "Pushing Docker image to Docker Hub..."
+                    bat "docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"
                 }
             }
         }
@@ -77,16 +71,14 @@ pipeline {
         stage('Deploy Application') {
             steps {
                 script {
-                    // Pull the Docker image from the registry
-                    bat "docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}"
+                    echo "Deploying application using Docker Compose..."
 
-                    // Ensure Docker Compose file exists
                     def composeFile = 'docker-compose.yml'
 
-                    // Always pull the latest Docker images
+                    // Pull the latest Docker images
                     bat "docker-compose -f ${composeFile} pull"
 
-                    // Start the services with Docker Compose
+                    // Start services with Docker Compose
                     bat "docker-compose -f ${composeFile} up -d"
                 }
             }
