@@ -53,7 +53,7 @@ pipeline {
                     // Login to Docker Hub (set up Docker credentials in Jenkins)
                     //docker.withRegistry('https://docker.io', 'dockerhub-credentials') {
                         // Login happens here, but no further commands inside the block
-                        bat docker login -u "nisar10" -p "Nisar@039"
+                        bat "docker login -u 'nisar10' -p 'Nisar@039'"
                     }
                 }
             }
