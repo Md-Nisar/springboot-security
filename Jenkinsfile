@@ -52,7 +52,7 @@ pipeline {
                 script {
                     echo "Logging in to Docker Hub..."
                     docker.withRegistry(DOCKER_REGISTRY, 'dockerhub-credentials') {
-                        echo "Successfully logged in to Docker Hub"
+                        echo "Successfully logged in to Docker Hub!"
                     }
                 }
             }
