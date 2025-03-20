@@ -1,12 +1,11 @@
-# Logs
-logs/
-*.log
-*.log.*
-
 # Java
 *.class
 *.war
 *.jar
+
+# Spring Boot
+*.pid
+hs_err_pid*
 
 # Maven
 target/
@@ -16,15 +15,13 @@ target/
 .gradle/
 build/
 
-# Spring Boot
-*.pid
-hs_err_pid*
-
 # IntelliJ IDEA
 .idea/
 *.iml
 *.iws
 out/
+.run/
+*.run.xml
 
 # Eclipse
 *.classpath
@@ -40,22 +37,6 @@ dist/
 nbdist/
 *.bak
 
-# VSCode
-.vscode/
-
-# Operating System Files
-.DS_Store
-Thumbs.db
-ehthumbs.db
-Icon?
-
-# Git specific
-*.swp
-*.swo
-*.orig
-*.rej
-*.patch
-
 # Node.js
 node_modules/
 npm-debug.log*
@@ -70,10 +51,32 @@ dist/
 src/assets/generated/
 tmp/
 
+
+# VSCode
+.vscode/
+
+# Logs
+logs/
+*.log
+*.log.*
+
 # Environment Variables
 .env
 *.env.local
 .env.*
+
+# Git specific
+*.swp
+*.swo
+*.orig
+*.rej
+*.patch
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
 
 # Dependency directories
 bower_components/
