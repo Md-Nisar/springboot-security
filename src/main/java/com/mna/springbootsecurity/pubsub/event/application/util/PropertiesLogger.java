@@ -78,14 +78,14 @@ public class PropertiesLogger {
         String mega = " MB";
 
         String memoryLog = "--- Memory Usage ---\n" +
-                String.format("Free memory: %s%s%n", format.format(freeMemory / mb), mega) +
-                String.format("Allocated memory: %s%s%n", format.format(allocatedMemory / mb), mega) +
-                String.format("Max memory: %s%s%n", format.format(maxMemory / mb), mega) +
-                String.format("Total free memory: %s%s%n", format.format((freeMemory + (maxMemory - allocatedMemory)) / mb), mega);
+                String.format(Locale.ROOT, "Free memory: %s%s%n", format.format(freeMemory / mb), mega) +
+                String.format(Locale.ROOT, "Allocated memory: %s%s%n", format.format(allocatedMemory / mb), mega) +
+                String.format(Locale.ROOT, "Max memory: %s%s%n", format.format(maxMemory / mb), mega) +
+                String.format(Locale.ROOT, "Total free memory: %s%s%n", format.format((freeMemory + (maxMemory - allocatedMemory)) / mb), mega);
         log.info(memoryLog);
     }
 
-    public List<EnumerablePropertySource<?>> findPropertiesPropertySources() {
+    private List<EnumerablePropertySource<?>> findPropertiesPropertySources() {
         return environment.getPropertySources().stream()
                 .filter(ps -> ps instanceof EnumerablePropertySource<?>)
                 .map(ps -> (EnumerablePropertySource<?>) ps)

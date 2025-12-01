@@ -1,17 +1,23 @@
 package com.mna.springbootsecurity.security.model;
 
 import com.mna.springbootsecurity.domain.entity.User;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class CustomUserDetails implements UserDetails {
 
     private final User user;
+
+    @Getter
+    private final Map<String, String> data = new HashMap<>();
 
     @Override
     public String getUsername() {
@@ -49,4 +55,5 @@ public class CustomUserDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

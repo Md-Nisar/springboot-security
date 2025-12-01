@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import java.util.Locale;
+
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -17,8 +19,8 @@ public class EmailPreparer {
     private final AuthLinkHelper urlGenerator;
 
     public String prepareWelcomeEmail(EmailNotificationData emailNotification) {
-        return String.format(
-                        """
+        return String.format(Locale.ROOT,
+                """
                                 Dear %s, Congratulations!
                                 Welcome to our service! We are excited to have you with us.
                                 Best regards,

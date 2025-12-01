@@ -1,0 +1,79 @@
+<configuration>
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <!-- Spring Property Injection -->
+    <springProperty scope="context" name="application.version" source="application.version"/>
+    <springProperty scope="context" name="server.port" source="server.port"/>
+    <springProperty scope="context" name="logstash.server.host" source="logstash.server.host"/>
+    <springProperty scope="context" name="logstash.server.port" source="logstash.server.port"/>
+
+
+    <!-- Console Appender (included via default Spring Boot config) -->
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+    <!-- File Appender -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>${FILE_LOG_THRESHOLD:-INFO}</level>
+        </filter>
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <charset>${FILE_LOG_CHARSET}</charset>
+        </encoder>
+        <file>${LOG_FILE:-logs/app.log}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOGBACK_ROLLINGPOLICY_FILE_NAME_PATTERN:-${LOG_FILE}.%d{yyyy-MM-dd}.%i.gz}
+            </fileNamePattern>
+            <cleanHistoryOnStart>${LOGBACK_ROLLINGPOLICY_CLEAN_HISTORY_ON_START:-false}</cleanHistoryOnStart>
+            <maxFileSize>${LOGBACK_ROLLINGPOLICY_MAX_FILE_SIZE:-10MB}</maxFileSize>
+            <totalSizeCap>${LOGBACK_ROLLINGPOLICY_TOTAL_SIZE_CAP:-1GB}</totalSizeCap>
+            <maxHistory>${LOGBACK_ROLLINGPOLICY_MAX_HISTORY:-3}</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+
+    <!-- logs for Development -->
+    <springProfile name="dev">
+        <root level="DEBUG">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="FILE"/>
+        </root>
+    </springProfile>
+
+    <!-- logs for Production -->
+    <springProfile name="prod">
+
+        <!-- Logstash Appender -->
+        <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+            <destination>${logstash.server.host}:${logstash.server.port}</destination>
+            <keepAliveDuration>5 minutes</keepAliveDuration>
+            <reconnectionDelay>5 second</reconnectionDelay>
+            <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+                <provider class="net.logstash.logback.composite.loggingevent.ArgumentsJsonProvider"/>
+                <fieldNames>
+                    <timestamp>timestamp</timestamp>
+                    <logLevel>level</logLevel>
+                    <thread>thread</thread>
+                    <logger>logger</logger>
+                    <message>msg</message>
+                    <pattern>pattern</pattern>
+                    <mdc/>
+                </fieldNames>
+                <writeVersionAsString>true</writeVersionAsString>
+                <version>${application.version}</version>
+                <customFields>
+                    {
+                    "application.server.port":"${server.port}",
+                    "application.server.host":"${HOSTNAME}"
+                    }
+                </customFields>
+            </encoder>
+        </appender>
+
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="FILE"/>
+            <appender-ref ref="LOGSTASH"/>
+        </root>
+    </springProfile>
+</configuration>

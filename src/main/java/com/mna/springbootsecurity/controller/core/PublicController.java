@@ -2,7 +2,6 @@ package com.mna.springbootsecurity.controller.core;
 
 import com.mna.springbootsecurity.base.vo.response.ControllerResponse;
 import com.mna.springbootsecurity.util.ResponseUtil;
-import jakarta.validation.constraints.Email;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.http.ResponseEntity;

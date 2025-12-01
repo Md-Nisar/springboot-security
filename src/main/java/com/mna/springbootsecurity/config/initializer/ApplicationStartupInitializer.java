@@ -22,26 +22,17 @@ public class ApplicationStartupInitializer implements ApplicationRunner {
     private final RedisSubscriberService redisSubscriberService;
     private final RoleDao roleDao;
 
-    @Value("${application.startup-ops.enabled:false}")
+    @Value("${application.startup.ops.enabled:false}")
     private boolean startupOpsEnabled;
 
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
         if (startupOpsEnabled) {
-            listBeans();
             initializeRoles();
             registerRedisMessageListener();
         }
 
-    }
-
-    private void listBeans() {
-        String[] beanNames = applicationContext.getBeanDefinitionNames();
-        log.info("Beans provided by Spring Boot:: ");
-        for (String beanName : beanNames) {
-            System.out.println(beanName);
-        }
     }
 
     private void initializeRoles() {
@@ -63,6 +54,7 @@ public class ApplicationStartupInitializer implements ApplicationRunner {
 
         roleCreator.createIfNotFound(Roles.USER.getValue());
         roleCreator.createIfNotFound(Roles.ADMIN.getValue());
+        roleCreator.createIfNotFound(Roles.SYSTEM.getValue());
     }
 
     public void registerRedisMessageListener() {

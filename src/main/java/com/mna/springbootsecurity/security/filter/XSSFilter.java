@@ -17,13 +17,10 @@ public class XSSFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        log.info("Processing XSSFilter...");
+        log.debug("Processing XSSFilter - {} {}", request.getMethod(), request.getRequestURI());
 
         // Wrap the request to sanitize the parameters
-        HttpServletRequest sanitizedRequest = new XSSRequestWrapper(request);
-
-        // Continue the filter chain with sanitized request
-        filterChain.doFilter(sanitizedRequest, response);
+        filterChain.doFilter(new XSSRequestWrapper(request), response);
     }
 
 }

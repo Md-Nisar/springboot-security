@@ -2,8 +2,8 @@ package com.mna.springbootsecurity.pubsub.message.redis.config;
 
 import com.mna.springbootsecurity.base.constant.Profiles;
 import com.mna.springbootsecurity.base.property.RedisPubSubProperties;
-import com.mna.springbootsecurity.pubsub.message.redis.subscriber.EmailNotificationListener;
 import com.mna.springbootsecurity.pubsub.message.redis.publisher.RedisMessagePublisher;
+import com.mna.springbootsecurity.pubsub.message.redis.subscriber.EmailNotificationListener;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;

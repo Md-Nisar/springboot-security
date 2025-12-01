@@ -1,0 +1,25 @@
+package com.mna.springbootsecurity.distributed.config;
+
+import com.mna.springbootsecurity.base.property.RedisProperties;
+import lombok.RequiredArgsConstructor;
+import org.redisson.Redisson;
+import org.redisson.api.RedissonClient;
+import org.redisson.config.Config;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@RequiredArgsConstructor
+public class RedissonConfiguration {
+
+    private final RedisProperties redisProperties;
+
+    @Bean
+    public RedissonClient redissonClient() {
+        Config config = new Config();
+        config.useSingleServer()
+                .setAddress("redis://" + redisProperties.getHost() + ":" + redisProperties.getPort())
+                .setDatabase(Integer.parseInt(redisProperties.getDatabase()));
+        return Redisson.create(config);
+    }
+}

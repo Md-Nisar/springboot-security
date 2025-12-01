@@ -12,6 +12,9 @@ import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Locale;
+
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -22,9 +25,10 @@ public class EmailNotificationListener implements MessageListener {
 
     @Override
     public void onMessage(@NonNull Message message, byte[] pattern) {
-        String messageBody = new String(message.getBody());
+        String messageBody = new String(message.getBody(), StandardCharsets.UTF_8);
         try {
-            EmailNotificationData emailNotification = objectMapper.readValue(messageBody, new TypeReference<EmailNotificationData>() {});
+            EmailNotificationData emailNotification = objectMapper.readValue(messageBody, new TypeReference<EmailNotificationData>() {
+            });
             log.info("Message Received:: of type 'EmailNotification' {}", formatMessageSummary(emailNotification));
             emailNotificationHandler.handleEmailNotification(emailNotification);
         } catch (JsonProcessingException e) {
@@ -34,7 +38,7 @@ public class EmailNotificationListener implements MessageListener {
 
     private String formatMessageSummary(EmailNotificationData emailNotification) {
         // Example implementation: log specific properties or a summary
-        return String.format("Email to: %s, Type: %s, Data: %s",
+        return String.format(Locale.ROOT, "Email to: %s, Type: %s, Data: %s",
                 emailNotification.getEmailAddress(), emailNotification.getType(), emailNotification.getData());
     }
 }

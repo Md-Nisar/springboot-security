@@ -7,6 +7,8 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.Locale;
+
 @Component
 @ConfigurationProperties(prefix = "application")
 @Getter
@@ -31,11 +33,11 @@ public class ApplicationProperties {
         private String basePath = "";
 
         public String getUrl() {
-            return String.format("http://%s:%d", host, port);
+            return String.format(Locale.ROOT, "http://%s:%d", host, port);
         }
 
         public String getBaseUrl() {
-            return String.format("http://%s:%d%s", host, port, basePath != null ? basePath : "");
+            return String.format(Locale.ROOT, "http://%s:%d%s", host, port, basePath != null ? basePath : "");
         }
     }
 
@@ -46,11 +48,11 @@ public class ApplicationProperties {
         private String basePath = "";
 
         public String getUrl() {
-            return String.format("http://%s:%d", host, port);
+            return String.format(Locale.ROOT, "http://%s:%d", host, port);
         }
 
         public String getBaseUrl() {
-            return String.format("http://%s:%d%s", host, port, basePath != null ? basePath : "");
+            return String.format(Locale.ROOT, "http://%s:%d%s", host, port, basePath != null ? basePath : "");
         }
     }
 

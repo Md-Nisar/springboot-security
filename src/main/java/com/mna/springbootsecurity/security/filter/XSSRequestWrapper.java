@@ -5,8 +5,6 @@ import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
 import lombok.extern.slf4j.Slf4j;
-import org.jsoup.Jsoup;
-import org.jsoup.safety.Safelist;
 import org.springframework.http.MediaType;
 
 import java.io.BufferedReader;
@@ -68,7 +66,7 @@ public class XSSRequestWrapper extends HttpServletRequestWrapper {
             // Read the original body, sanitize it, and return a new BufferedReader with sanitized content
             String originalBody = new String(super.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
             String sanitizedBody = stripXSS(originalBody);
-            return new BufferedReader(new InputStreamReader(new ByteArrayInputStream(sanitizedBody.getBytes(StandardCharsets.UTF_8))));
+            return new BufferedReader(new InputStreamReader(new ByteArrayInputStream(sanitizedBody.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8));
         } catch (IOException e) {
             log.error("Error reading or sanitizing the request body", e);
             throw e;
@@ -87,7 +85,7 @@ public class XSSRequestWrapper extends HttpServletRequestWrapper {
 
 
         return new ServletInputStream() {
-            private final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(sanitizedBody.getBytes());
+            private final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(sanitizedBody.getBytes(StandardCharsets.UTF_8));
 
             @Override
             public int read() throws IOException {

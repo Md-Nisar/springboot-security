@@ -43,7 +43,7 @@ public class JwtBlacklistFilter extends OncePerRequestFilter {
                 return;
             }
 
-            log.info("Processing JwtBlacklistFilter...");
+            log.debug("Processing JwtBlacklistFilter - {} {}", request.getMethod(), request.getRequestURI());
             // Check if token is blacklisted
             String username = jwtUtil.extractSubject(token);
             if (jwtTokenCacheService.isTokenBlacklisted(username, token)) {

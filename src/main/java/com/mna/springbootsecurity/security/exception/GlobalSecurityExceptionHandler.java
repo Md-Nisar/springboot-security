@@ -13,6 +13,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @ControllerAdvice
 @Slf4j
@@ -74,7 +75,7 @@ public class GlobalSecurityExceptionHandler extends ResponseEntityExceptionHandl
 
     private ResponseEntity<ErrorResponse> buildErrorResponse(HttpStatus status, String message, WebRequest request) {
         ErrorResponse errorResponse = ErrorResponse.builder()
-                .timestamp(LocalDateTime.now())
+                .timestamp(LocalDateTime.now(ZoneId.of("UTC")))
                 .status(status.value())
                 .error(status.getReasonPhrase())
                 .message(message)

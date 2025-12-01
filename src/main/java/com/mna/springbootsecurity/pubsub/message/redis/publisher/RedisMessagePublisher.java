@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import java.util.Locale;
+
 @RequiredArgsConstructor
 @Slf4j
 public class RedisMessagePublisher implements MessagePublisher {
@@ -27,7 +29,7 @@ public class RedisMessagePublisher implements MessagePublisher {
         // Example implementation: log specific properties or a summary
         // Adjust based on the actual structure of your message
         if (message instanceof EmailNotificationData emailMessage) {
-            return String.format("Email to: %s, Type: %s, Data: %s",
+            return String.format(Locale.ROOT, "Email to: %s, Type: %s, Data: %s",
                     emailMessage.getEmailAddress(), emailMessage.getType(), emailMessage.getData());
         }
         // Add other message types as needed

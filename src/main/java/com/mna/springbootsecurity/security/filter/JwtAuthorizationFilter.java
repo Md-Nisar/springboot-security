@@ -48,7 +48,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             return;
         }
 
-        log.info("Processing JwtAuthorizationFilter...");
+        log.debug("Processing JwtAuthorizationFilter - {} {}", request.getMethod(), request.getRequestURI());
 
         try {
             String username = jwtUtil.extractSubject(accessToken);

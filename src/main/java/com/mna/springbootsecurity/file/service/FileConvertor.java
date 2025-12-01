@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 @Service
@@ -29,7 +30,7 @@ public class FileConvertor {
             throw new IllegalStateException("Upload directory is not specified.");
         }
 
-        String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        String timestamp = new SimpleDateFormat("yyyyMMddHHmmss", Locale.ROOT).format(new Date());
         String customDirPath = uploadDir + File.separator + "temp" + File.separator + timestamp;
 
         File customDir = new File(customDirPath);

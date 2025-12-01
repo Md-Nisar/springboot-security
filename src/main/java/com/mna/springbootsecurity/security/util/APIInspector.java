@@ -17,6 +17,8 @@ public class APIInspector {
                 "/api/v1/auth/verify",
                 "/api/v1/auth/login",
                 "/api/v1/auth/refresh",
+                "/favicon.ico",
+                "/api/v1/powerbi/**"
                 // Add more public endpoints as needed
         };
     }

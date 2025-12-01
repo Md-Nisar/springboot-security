@@ -1,6 +1,6 @@
 package com.mna.springbootsecurity.analytics.snowflake.config;
 
-import com.mna.springbootsecurity.analytics.snowflake.helper.UrlBuilderHelper;
+import com.mna.springbootsecurity.analytics.snowflake.helper.UrlBuilder;
 import com.mna.springbootsecurity.base.constant.Profiles;
 import com.mna.springbootsecurity.base.property.SnowflakeProperties;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +31,7 @@ public class DataSourceConfiguration {
         snowflakeDataSource = new BasicDataSource();
 
         try {
-            String url = UrlBuilderHelper.buildSnowflakeUrl(
+            String url = UrlBuilder.buildSnowflakeUrl(
                     snowflakeProperties.getUrl(),
                     snowflakeProperties.getDatabase(),
                     snowflakeProperties.getSchema(),

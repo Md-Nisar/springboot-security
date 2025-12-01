@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 public enum ScheduledJobName {
 
-    JWT_TOKEN_CLEANUP("JWT Token Cleanup"),
+    JWT_BLACKLISTED_TOKEN_CLEANUP("JWT Blacklisted Token Cleanup"),
     ANOTHER_JOB("Another Scheduled Job");
     // Add more job names as needed
 

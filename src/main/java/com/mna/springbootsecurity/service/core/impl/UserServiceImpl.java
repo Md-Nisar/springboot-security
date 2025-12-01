@@ -22,6 +22,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
 
+
     @Transactional(readOnly = true)
     public UserData getUserByUsername(String username) {
         User user = userDao.findByUsername(username)
@@ -43,11 +44,12 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     public UserData updateUser(String username, UserData userData) {
-        UserData existingUserData = getUserByUsername(username);
-        User user = new User();
-        user.setId(existingUserData.getId());
+        User user = userDao.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
         user.setEmail(userData.getEmail());
         User savedUser = userDao.save(user);
+
         return UserData.builder()
                 .id(savedUser.getId())
                 .username(savedUser.getUsername())

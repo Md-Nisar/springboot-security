@@ -13,6 +13,7 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.UUID;
 
 @Aspect
@@ -37,7 +38,7 @@ public class TransactionLoggingAspect {
         // Log only if a transaction is active
         if (isTransactionActive) {
             transactionId = UUID.randomUUID().toString();
-            startTime = LocalDateTime.now();
+            startTime = LocalDateTime.now(ZoneId.of("UTC"));
 
             // Here, we're assuming the transaction name could be set somewhere in the service layer.
             // Otherwise, you'd set and manage this name at the point where transactions are started.
@@ -67,7 +68,7 @@ public class TransactionLoggingAspect {
             result = ((org.aspectj.lang.ProceedingJoinPoint) joinPoint).proceed();
 
             if (isTransactionActive) {
-                LocalDateTime endTime = LocalDateTime.now();
+                LocalDateTime endTime = LocalDateTime.now(ZoneId.of("UTC"));
                 log.info("Transaction completed successfully:: TransactionId: {}, TransactionName: {}, EndTime: {}, Duration: {}ms",
                         transactionId, transactionName, endTime, java.time.Duration.between(startTime, endTime).toMillis());
             }

@@ -1,7 +1,7 @@
 package com.mna.springbootsecurity.cache.service.impl;
 
-import com.mna.springbootsecurity.cache.constant.CacheKey;
 import com.mna.springbootsecurity.base.vo.JwtTokenData;
+import com.mna.springbootsecurity.cache.constant.CacheKey;
 import com.mna.springbootsecurity.cache.service.CacheService;
 import com.mna.springbootsecurity.cache.service.JwtTokenCacheService;
 import com.mna.springbootsecurity.security.util.JwtUtil;
@@ -32,7 +32,7 @@ public class JwtTokenCacheServiceImpl implements JwtTokenCacheService {
 
     @Override
     public void storeTokenWithExpiry(String key, JwtTokenData jwTokenData) {
-        long expiryInSeconds = Duration.between(LocalDateTime.now(), LocalDateTime.ofInstant(jwTokenData.getExpiration().toInstant(), ZoneId.systemDefault())).getSeconds();
+        long expiryInSeconds = Duration.between(LocalDateTime.now(ZoneId.of("UTC")), LocalDateTime.ofInstant(jwTokenData.getExpiration().toInstant(), ZoneId.systemDefault())).getSeconds();
         cacheService.setValue(CacheKey.JWT_ACCESS_TOKEN + key, jwTokenData, expiryInSeconds, TimeUnit.SECONDS);
         log.info("Token data stored successfully for key '{}'.", CacheKey.JWT_ACCESS_TOKEN + key);
     }

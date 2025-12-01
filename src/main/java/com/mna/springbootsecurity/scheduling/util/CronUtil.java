@@ -7,28 +7,29 @@ import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Locale;
 import java.util.Optional;
 
 public class CronUtil {
 
     public static String generateDailyCron(int hour, int minute) {
-        return String.format("0 %d %d * * ?", minute, hour);
+        return String.format(Locale.ROOT, "0 %d %d * * ?", minute, hour);
     }
 
     public static String generateWeeklyCron(DayOfWeek dayOfWeek, int hour, int minute) {
-        return String.format("0 %d %d ? * %d", minute, hour, dayOfWeek.getValue());
+        return String.format(Locale.ROOT, "0 %d %d ? * %d", minute, hour, dayOfWeek.getValue());
     }
 
     public static String generateMonthlyCron(int dayOfMonth, int hour, int minute) {
-        return String.format("0 %d %d %d * ?", minute, hour, dayOfMonth);
+        return String.format(Locale.ROOT, "0 %d %d %d * ?", minute, hour, dayOfMonth);
     }
 
     public static String generateEveryXMinutesCron(int intervalMinutes) {
-        return String.format("0 0/%d * * * ?", intervalMinutes);
+        return String.format(Locale.ROOT, "0 0/%d * * * ?", intervalMinutes);
     }
 
     public static String generateEveryXHoursCron(int intervalHours) {
-        return String.format("0 0 0/%d * * ?", intervalHours);
+        return String.format(Locale.ROOT, "0 0 0/%d * * ?", intervalHours);
     }
 
     public static boolean isValidCronExpression(String cronExpression) {
@@ -45,7 +46,7 @@ public class CronUtil {
             return Optional.empty();
         }
         CronExpression cron = CronExpression.parse(cronExpression);
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now(ZoneId.of("UTC"));
         return Optional.ofNullable(cron.next(ZonedDateTime.of(now, zoneId)));
     }
 }

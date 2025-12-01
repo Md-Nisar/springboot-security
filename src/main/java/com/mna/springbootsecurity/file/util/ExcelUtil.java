@@ -51,6 +51,7 @@ public class ExcelUtil {
         return data;
     }
 
+
     public static <T> List<T> mapExcelToVO(InputStream inputStream, Class<T> dtoClass) throws Exception {
         List<T> dtoList = new ArrayList<>();
         try (Workbook workbook = new XSSFWorkbook(inputStream)) {
@@ -66,7 +67,7 @@ public class ExcelUtil {
                         Cell cell = row.getCell(j);
                         if (cell != null) {
                             Field field = fields[j];
-                            field.setAccessible(true);
+    //                        field.setAccessible(true);
 
                             // Set field value based on cell type
                             switch (cell.getCellType()) {
